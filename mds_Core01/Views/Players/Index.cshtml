@@ -1,0 +1,53 @@
+﻿@model IEnumerable<mds_Core01.Models.Player>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="display-4">Player List</h1>
+
+<div class="row">
+    <div class="col">
+        <div class="d-flex justify-content-end">
+            <a asp-action="Create" asp-controller="Players" class="btn btn-outline-primary btn-sm"><i class="fa fa-plus"></i>Add New Player</a>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between">
+                    <div>
+                        <img class="rounded-circle" src="@item.Picture" width="35" />&nbsp;
+                        <strong>Name: </strong>@Html.DisplayFor(x=>item.PlayerName)
+                        <strong>Date Of Birth: </strong>@Html.DisplayFor(x=>item.BirthDate)
+                        <strong>Phone: </strong>@Html.DisplayFor(x=>item.Phone)
+                        <strong>Result: </strong>@Html.DisplayFor(x=>item.MaritalStatus)
+                    </div>
+                    <div>
+                        <a asp-action="Edit" asp-controller="Players" class="btn btn-outline-success" asp-route-id="@item.PlayerId"><i class="fa fa-edit"></i>Edit</a>
+                        <a asp-action="Delete" asp-controller="Players" class="btn btn-outline-danger" asp-route-id="@item.PlayerId"><i class="fa fa-trash"></i>Delete</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-hover table-responsive-sm">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Format ID</th>
+                                <th>Match Format </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var data in item.SeriesEntries)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(x=>data.Format.FormatId)</td>
+                                    <td>@Html.DisplayFor(x=>data.Format.FormatName)</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

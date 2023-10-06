@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.js"></script>
+    @await RenderSectionAsync("Styles", required: false)
+
+    
+
+    <script>
+        function LoadData(FormatId = null) {
+            var FormatContainer = $("#FormatContainer")
+            $.ajax({
+                url: "/Players/AddNewFormats/" + FormatId ?? "",
+                type: "GET",
+                success: function (data) {
+                    FormatContainer.append(data);
+                }
+            })
+        }
+        $(document).on("click", "#btnAdd", function (e) {
+            e.preventDefault();
+            LoadData();
+        })
+        $(document).on("click", "#DeleteFormat", function (e) {
+            e.preventDefault();
+            $(this).parent().parent().remove();
+        })
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            @Html.ActionLink("Player", "Index", "Players", new { }, new { @class = "fw-bold fs-1 nav-link" })
+
+            @Html.ActionLink("Format", "Index", "Formats", new { }, new { @class = "fw-bold fs-1 nav-link" })
+        </div>
+    </div>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <footer>
+        <p class="text-center">&copy;@DateTime.Now.Year---Manjurul islam 1272178</p>
+    </footer>
+
+
+
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
+
